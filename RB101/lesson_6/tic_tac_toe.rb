@@ -46,11 +46,15 @@ def empty_squares(brd)
   brd.select { |_k, v| v.strip.empty? }.keys
 end
 
+def joinor(array, delimiter, last_delimiter = 'or')
+  array[0..-2].join(delimiter) + " #{last_delimiter} #{array[-1]}"
+end
+
 def player_places_piece!(brd)
   square = ''
 
   loop do
-    prompt "Choose a square (#{empty_squares(brd).join(', ')}):"
+    prompt "Choose a square (#{joinor(empty_squares(brd), ', ', 'or')}):"
     square = gets.chomp.to_i
     break if empty_squares(brd).include?(square)
     prompt "Sorry, that's not a valid choice."
@@ -105,7 +109,7 @@ loop do
   msg = (winner = detect_winner(board)) ? "#{winner} won!" : "It's a tie!"
   prompt(msg)
 
-  prompt("Play again? (y or n)")
+  prompt("Play again? (y/n)")
   answer = gets.chomp
   break unless answer.downcase.start_with?("y")
 end
