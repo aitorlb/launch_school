@@ -21,10 +21,13 @@ WINNING_LIES = [
 ].freeze
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
+WINS_COUNT = 5
 
-def display_board(brd)
+def display_board(brd, scr)
   system "clear"
-  puts "Player is #{PLAYER_MARKER}. Computer is #{COMPUTER_MARKER}"
+  puts "MARKERS: Player '#{PLAYER_MARKER}'	Computer '#{COMPUTER_MARKER}'"
+  puts "RULES: 	 First to #{WINS_COUNT} wins the game"
+  puts "SCORE: 	 Player  #{scr[:player]}	Computer  #{scr[:computer]}"
   puts
   puts " #{brd[1]} | #{brd[2]} | #{brd[3]} "
   puts "---+---+---"
@@ -73,7 +76,7 @@ def board_full?(brd)
 end
 
 def someone_won?(brd)
-  detect_winner(brd).is_a?(String)
+  detect_winner(brd).is_a?(Symbol)
 end
 
 def same_marker?(brd, squares, marker)
@@ -83,21 +86,42 @@ end
 def detect_winner(brd)
   WINNING_LIES.each do |line|
     if same_marker?(brd, line, PLAYER_MARKER)
-      return "Player"
+      return :player
     elsif same_marker?(brd, line, COMPUTER_MARKER)
-      return "Computer"
+      return :computer
     end
   end
 
   nil
 end
 
+def increment_score(score, winner)
+  return unless winner
+
+  score[winner] += 1
+end
+
+def game_ended?(score)
+  score.values.any? {|wins| wins >= WINS_COUNT}
+end
+
+def score_message(winner, score)
+  return "It's a tie!" unless winner
+
+  if game_ended?(score)
+    "#{winner.upcase} WON THE GAME!"
+  else
+    "#{winner.capitalize} won!"
+  end
+end
+
+score = { computer: 0, player: 0}
+
 loop do
-  # State of the game
   board = initialize_board
 
   loop do
-    display_board(board)
+    display_board(board, score)
     player_places_piece!(board)
     break if someone_won?(board) || board_full?(board)
 
@@ -105,10 +129,13 @@ loop do
     break if someone_won?(board) || board_full?(board)
   end
 
-  display_board(board)
-  msg = (winner = detect_winner(board)) ? "#{winner} won!" : "It's a tie!"
-  prompt(msg)
+  winner = detect_winner(board)
+  increment_score(score, winner)
+  display_board(board, score)
 
+  prompt(score_message(winner, score))
+
+  break if game_ended?(score)
   prompt("Play again? (y/n)")
   answer = gets.chomp
   break unless answer.downcase.start_with?("y")
