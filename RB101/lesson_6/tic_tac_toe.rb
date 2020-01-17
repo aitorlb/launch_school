@@ -66,8 +66,16 @@ def player_places_piece!(brd)
   brd[square] = PLAYER_MARKER
 end
 
+def find_threat(brd)
+  detect_inmediate_threat(brd, PLAYER_MARKER)
+end
+
+def find_opportunity(brd)
+  detect_inmediate_threat(brd, COMPUTER_MARKER)
+end
+
 def computer_places_piece!(brd)
-  squares = detect_inmediate_threat(brd, PLAYER_MARKER)
+  squares = find_opportunity(brd) || find_threat(brd)
   square = if squares
              find_empty(brd, squares)
            else
