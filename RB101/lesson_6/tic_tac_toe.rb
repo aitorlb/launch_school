@@ -74,12 +74,16 @@ def find_opportunity(brd)
   detect_inmediate_threat(brd, COMPUTER_MARKER)
 end
 
+def pick_five(brd)
+  return 5 if empty_squares(brd).include?(5)
+end
+
 def computer_places_piece!(brd)
   squares = find_opportunity(brd) || find_threat(brd)
   square = if squares
              find_empty(brd, squares)
            else
-             random_empty(brd)
+             pick_five(brd) || random_empty(brd)
            end
   brd[square] = COMPUTER_MARKER
 end
