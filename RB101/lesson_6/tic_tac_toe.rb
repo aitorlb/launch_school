@@ -22,6 +22,7 @@ WINNING_LIES = [
 PLAYER_MARKER = 'X'
 COMPUTER_MARKER = 'O'
 WINS_COUNT = 5
+VALID_PLAYER_OPTIONS = %w(player computer).freeze
 
 def display_board(brd, scr)
   system "clear"
@@ -156,17 +157,40 @@ def score_message(winner, score)
   end
 end
 
+def ask_current_player
+  answer = ''
+  loop do
+    prompt("Who should go first? (#{VALID_PLAYER_OPTIONS.join('/')})")
+    answer = gets.chomp
+    break if VALID_PLAYER_OPTIONS.any? { |option| answer == option }
+    prompt "Sorry, that's not a valid choice."
+  end
+  answer
+end
+
+def place_piece!(brd, player)
+  case player
+  when "player"
+    player_places_piece!(brd)
+  when "computer"
+    computer_places_piece!(brd)
+  end
+end
+
+def switch_player(player)
+  (VALID_PLAYER_OPTIONS - [player]).first
+end
+
 score = { computer: 0, player: 0 }
 
 loop do
   board = initialize_board
+  current_player = ask_current_player
 
   loop do
     display_board(board, score)
-    player_places_piece!(board)
-    break if someone_won?(board) || board_full?(board)
-
-    computer_places_piece!(board)
+    place_piece!(board, current_player)
+    current_player = switch_player(current_player)
     break if someone_won?(board) || board_full?(board)
   end
 
