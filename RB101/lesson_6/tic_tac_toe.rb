@@ -45,8 +45,8 @@ def initialize_board
   SQUARES.each_with_object({}) { |num, hash| hash[num] = ' ' }
 end
 
-def empty_squares(brd)
-  brd.select { |_k, v| v.strip.empty? }.keys
+def empty_squares(brd, squares = SQUARES)
+  brd.slice(*squares).select { |_k, v| v.strip.empty? }.keys
 end
 
 def joinor(array, delimiter, last_delimiter = 'or')
@@ -67,7 +67,12 @@ def player_places_piece!(brd)
 end
 
 def computer_places_piece!(brd)
-  square = empty_squares(brd).sample
+  squares = detect_inmediate_threat(brd, PLAYER_MARKER)
+  square = if squares
+             find_empty(brd, squares)
+           else
+             random_empty(brd)
+           end
   brd[square] = COMPUTER_MARKER
 end
 
@@ -79,8 +84,32 @@ def someone_won?(brd)
   detect_winner(brd).is_a?(Symbol)
 end
 
+def markers_count(brd, squares, marker)
+  brd.values_at(*squares).count { |e| e == marker }
+end
+
+def random_empty(brd)
+  empty_squares(brd).sample
+end
+
+def find_empty(brd, squares)
+  empty_squares(brd, squares).first
+end
+
+def inmediate_threat?(brd, squares, marker)
+  markers_count(brd, squares, marker) == 2 && empty_squares(brd, squares).one?
+end
+
 def same_marker?(brd, squares, marker)
-  brd.values_at(*squares).all? { |v| v == marker }
+  markers_count(brd, squares, marker) == 3
+end
+
+def detect_inmediate_threat(brd, marker)
+  WINNING_LIES.each do |line|
+    return line if inmediate_threat?(brd, line, marker)
+  end
+
+  nil
 end
 
 def detect_winner(brd)
@@ -102,7 +131,7 @@ def increment_score(score, winner)
 end
 
 def game_ended?(score)
-  score.values.any? {|wins| wins >= WINS_COUNT}
+  score.values.any? { |wins| wins >= WINS_COUNT }
 end
 
 def score_message(winner, score)
@@ -115,7 +144,7 @@ def score_message(winner, score)
   end
 end
 
-score = { computer: 0, player: 0}
+score = { computer: 0, player: 0 }
 
 loop do
   board = initialize_board
