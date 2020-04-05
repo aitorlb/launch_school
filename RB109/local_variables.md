@@ -1,9 +1,10 @@
-# Notes related to RB109 Topics:
+# Notes on Special Topic of Interest for RB109:
+
+## Variables as pointers
 
 ### What is a Variable?
-- A variable is simply a name for a value.
-- It is helpful to think of variables as labeled containers that hold information.
-- A variable is denoted by a name, and refers to an object, which is called the value of the variable. A variable itself is not an object.
+- A variable is denoted by a name, and points to an object, which is called the value of the variable.
+- A variable itself is not an object, they are just labels that hold the reference to the actual object in memory.
 
 #### Local variable
 
