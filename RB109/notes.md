@@ -6,12 +6,12 @@ Be able to explain clearly the following topics:
 
 - [local variable scope, especially how local variables interact with method invocations with blocks and method definitions](./local_variable_scopes.md)
 - [how passing an object into a method definition can or cannot permanently change the object](./mutability_inmutability.md)
-- working with collections (Array, Hash, String), and popular collection methods (each, map, select, etc). Review the two lessons on these topics thoroughly.
+- [working with collections](./collections.md) (Array, Hash, String), and [popular collection methods](./collections_methods.md) (each, map, select, etc).
 - [variables as pointers](https://launchschool.com/books/ruby/read/more_stuff#variables_as_pointers)
 - [puts vs return](https://launchschool.com/books/ruby/read/methods#putsvsreturnthesequel)
-- false vs nil and the idea of "truthiness"
-- method definition and method invocation
-- implicit return value of method invocations and blocks
+- [false vs nil and the idea of "truthiness"](./truthiness.md)
+- [method definition and method invocation](./method_definition_invocation.md)
+- [implicit return value of method invocations and blocks](./implicit_return.md)
 
 
 ### Example 1

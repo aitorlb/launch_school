@@ -1,4 +1,4 @@
-# Notes on topic:
+# Notes on Special Topic of Interest for RB109:
 
 ## How passing an object into a method definition can or cannot permanently change the object
 
@@ -17,6 +17,7 @@ end
 s = 'hi'
 append(s)
 puts s
+# => 'hi!'
 ```
 
 Method `append` is defined with a parameter `string` and in its body the method `String#<<` is called on object referenced by `string` with the String `'!'` passed to it as argument.
@@ -55,6 +56,7 @@ end
 s = 'hi'
 reassign(s)
 puts s
+# => 'hi'
 ```
 
 Method `reassign` is defined with a parameter `string` and in its body `string` is reassigned to the return value of the method `String#+` being called on object referenced by `string` with the String `'!'` passed to it as argument.
