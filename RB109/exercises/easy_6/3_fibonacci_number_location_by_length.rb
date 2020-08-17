@@ -70,7 +70,7 @@ def compute_next_fib_number(fib_numbers)
   fib_numbers[previous_fib_num_index..current_fib_num_index].sum
 end
 
-# Approach 1: Storing only 3 Fibonacci numbers at a time
+# Approach 1: Storing only 2 Fibonacci numbers at a time
 
 # You may assume that the argument is always greater than or equal to 2.
 INITIAL_SEQUENCE = [8, 13]
@@ -81,27 +81,20 @@ def find_fibonacci_index_by_length(length)
   current_index      = INITIAL_INDEX
   current_fib_number = fib_numbers.last
 
-  debug_array = [1, 1, 2, 3, 5, 8, 13]
-
-  while length > current_fib_number.size
+  while length > current_fib_number.digits.size
     fib_numbers        = compute_fib_numbers(fib_numbers)
     current_index      += 1
     current_fib_number = fib_numbers.last
-
-    debug_array << current_fib_number
   end
 
-  puts "length: #{length}; current_fib_number: #{current_fib_number}; index: #{current_index}"
-  puts "================="
-  p debug_array
-  puts "================="
   current_index
 end
 
 def compute_fib_numbers(fib_numbers)
-  fib_numbers << fib_numbers.sum
-  fib_numbers.shift
-  fib_numbers
+  [
+    fib_numbers.last,
+    fib_numbers.sum
+  ]
 end
 
 # p find_fibonacci_index_by_length(2)
@@ -110,6 +103,6 @@ end
 puts find_fibonacci_index_by_length(2) == 7          # 1 1 2 3 5 8 13
 puts find_fibonacci_index_by_length(3) == 12         # 1 1 2 3 5 8 13 21 34 55 89 144
 puts find_fibonacci_index_by_length(10) == 45
-# puts find_fibonacci_index_by_length(100) == 476
-# puts find_fibonacci_index_by_length(1000) == 4782
-# puts find_fibonacci_index_by_length(10000) == 47847
+puts find_fibonacci_index_by_length(100) == 476
+puts find_fibonacci_index_by_length(1000) == 4782
+puts find_fibonacci_index_by_length(10000) == 47847
