@@ -26,7 +26,7 @@ leading_substrings('xyzzy') == ['x', 'xy', 'xyz', 'xyzz', 'xyzzy']
   1. Assign empty Array to `substrings`
   2. Iterate over `input_string`
     - Slice `input_string` up to `current_index`
-    - Add `substring` to `substrings`
+    - Add sliced string to `substrings`
   3. Return `substrings` sorted
 
 - Code
