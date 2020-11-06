@@ -27,7 +27,6 @@ You may assume that n is always a positive integer.
     - Rotating just 1 digit results in the original number being returned.
     - You may assume that n is always a positive integer
     - Do not use the method Array#rotate or Array#rotate!
-    - The original array should not be modified.
 
 - Examples
   - Covered

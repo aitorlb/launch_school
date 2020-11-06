@@ -57,6 +57,13 @@ max_rotation(8_703_529_146) == 7_321_609_845
       - return `result_number`
   
   - Method: max_rotation
+    - assign input `number` to `max_rotation`
+    - split `number` into Array of digits and assign its size to `size`
+    - loop `size` times
+      - call `rotate_rightmost_digits`
+        with `number` and (`size` - current `index`)
+        and assign to `max_rotation`
+    - return `max_rotation`
 
 - Code
 =end
@@ -79,8 +86,19 @@ def rotate_rightmost_digits(number, last_n_digits)
   result_array.join.to_i
 end
 
+def max_rotation(number)
+  max_rotation = number
+  size = number.to_s.chars.size
+
+  size.times do |index|
+    max_rotation = rotate_rightmost_digits(max_rotation, size - index)
+  end
+
+  max_rotation
+end
+
 puts max_rotation(735291) == 321579
-# max_rotation(3) == 3
-# max_rotation(35) == 53
-# max_rotation(105) == 15 # the leading zero gets dropped
-# max_rotation(8_703_529_146) == 7_321_609_845
+puts max_rotation(3) == 3
+puts max_rotation(35) == 53
+puts max_rotation(105) == 15 # the leading zero gets dropped
+puts max_rotation(8_703_529_146) == 7_321_609_845
