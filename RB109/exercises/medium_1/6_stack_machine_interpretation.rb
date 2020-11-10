@@ -87,36 +87,159 @@ minilang('6 PUSH')
 
 - Understand the problem
   - Input
-    - Integer number
+    - String
+      - 
   - Output
-    - Output to the sting
-      - 4-pointed diamond in an n x n grid
   - Rules
-    - the argument will always be an odd integer
-    - output starts with empty line?
+    - all programs are correct programs
+    - they won't contain unknown tokens
+    - initialize the register to 0.
 
 - Examples
   - Covered
 
 - Algorithm
-  Method: print_stars, args: `stars`, `spaces`
-    - if `spaces` is not 0
-      - print blank character times `spaces` / 2
-      - print star character times `stars`
-      - print blank character times `spaces` / 2
-      - print end of line character
-    - else
-      - print star character times `stars`
+  - assign 0 to `register`
+  - assign [] to `stack`
+  - #split input `string` into Array of substrings and assign to `tokens`
+  - iterate over `tokens`
+    - if `token` is an Integer (n command)
+      - assign `token` to `register`
+    - else if `token` is a String
+      - case `token`
+      - when `token` is eq to "PUSH"
+        - #push `register` value  to `stack`
+      - when `token` is eq to "ADD"
+        - #pop value from `stack`
+          add it to `register` value
+          and assign result to `register`
+      - when `token` is eq to "SUB"
+        - #pop value from `stack`
+          substract it to `register` value
+          and assign result to `register`
+      - when `token` is eq to "MULT"
+        - #pop value from `stack`,
+          multiply it to `register` value
+          and assign result to `register`
+      - when `token` is eq to "DIV"
+        - #pop value from `stack`
+           divides it into `register` value
+           and assign result to `register`
+      - when `token` is eq to "MOD"
+         - #pop value from `stack`,
+           divides it into `register` value
+           and assign remainder result to `register`
+      - when `token` is eq to "POP"
+        - #pop value from `stack`,
+          and assign it to `register`
+      - when `token` is eq to "PRINT"
+        - Print the register value
 
-  Method: calculate_stars, args: `n`
-    - assign Array of odd numbers from 1 up to (but not included) `n` to `odds`
-    - return `odds` + [`n`] + `odds` reversed
-
-  Method: diamonds, args: `n`
-    - call `calculate_stars` with `n` and assign to `stars_array`
-    - loop over `stars_array`
-      - assign `n` - `stars` to `spaces`
-      - call `print_stars` with `odds` and `spaces`
 
 - Code
 =end
+
+VALID_TOKENS = {
+  push: "PUSH",
+  add: "ADD",
+  sub: "SUB",
+  mult: "MULT",
+  div: "DIV",
+  mod: "MOD",
+  pop: "POP",
+  print: "PRINT",
+}
+
+def raise_error(token)
+  raise("Invalid token: '#{token}'")
+end
+
+def push(register, stack)
+  stack.push(register)
+
+  register
+end
+
+def add(register, stack)
+  register + stack.pop
+end
+
+def sub(register, stack)
+  register - stack.pop
+end
+
+def mult(register, stack)
+  register * stack.pop
+end
+
+def div(register, stack)
+  register / stack.pop
+end
+
+def mod(register, stack)
+  register % stack.pop
+end
+
+def pop(register, stack)
+  stack.pop
+end
+
+def print(register, stack)
+  puts register
+
+  register
+end
+
+def integer?(token)
+  token.to_i.to_s == token
+end
+
+def minilang(string)
+  tokens    = string.split
+  stack     = []
+  register  = 0
+
+  tokens.each do |token|
+    next register = token.to_i if integer?(token)
+
+    case token
+    when *VALID_TOKENS.values
+      method_name = VALID_TOKENS.key(token)
+      register    = send(method_name, register, stack)
+    else
+      raise_error(token)
+    end
+  end
+end
+
+minilang('PRINT')
+# 0
+
+minilang('5 PUSH 3 MULT PRINT')
+# 15
+
+minilang('5 PRINT PUSH 3 PRINT ADD PRINT')
+# 5
+# 3
+# 8
+
+minilang('5 PUSH POP PRINT')
+# 5
+
+minilang('3 PUSH 4 PUSH 5 PUSH PRINT ADD PRINT POP PRINT ADD PRINT')
+# 5
+# 10
+# 4
+# 7
+
+minilang('3 PUSH PUSH 7 DIV MULT PRINT ')
+# 6
+
+minilang('4 PUSH PUSH 7 MOD MULT PRINT ')
+# 12
+
+minilang('-3 PUSH 5 SUB PRINT')
+# 8
+
+minilang('6 PUSH')
+# (nothing printed; no PRINT commands)
