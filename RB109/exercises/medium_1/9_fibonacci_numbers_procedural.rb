@@ -43,7 +43,7 @@ fibonacci(100_001) # => 4202692702.....8285979669707537501
 
 - Algorithm
   Method: fibonacci, args: `n`
-    - assign [1, 1] to `last_two_fibs`
+    - assign [0, 1] to `last_two_fibs`
     - iterate over 2 up to (`n` - 1)
       - assign sum of `last_two_fibs` to `current_fib`
       - pop first element of `last_two_fibs`
