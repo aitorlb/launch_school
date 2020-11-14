@@ -76,6 +76,7 @@ The longest sentence in this book is 157 words long.
     - sort `sentences` by size
     - assign last element in `sentences` to `longest_sentence`
     - split `longest_sentence` using WORD_DELIMITERS and assign to `words`
+    - reject empty characters from `words` Array
     - Print
       - "The longest sentence in this book is: "#{longest_sentence}"
       - "The longest sentence in this book is #{words.size} words long."
@@ -88,10 +89,10 @@ WORD_DELIMITERS = [" ", "\n"]
 
 def longest_sentence(text)
   sentences = text.split(Regexp.union(SENTENCE_DELIMITERS))
-  longest_sentence = sentences.sort_by(&:size).last
-  words = longest_sentence.split(Regexp.union(WORD_DELIMITERS))
+  longest_sentence = sentences.sort_by(&:size).last.strip
+  words = longest_sentence.split(Regexp.union(WORD_DELIMITERS)).reject(&:empty?)
 
-  puts "The longest sentence in this book is: \n\n\"#{longest_sentence}\"\n\n"
+  puts "The longest sentence in this book is: \n\n#{longest_sentence}\n\n"
   puts "The longest sentence in this book is #{words.size} words long."
 end
 
@@ -128,3 +129,8 @@ the people, for the people, shall not perish from the
 earth."
 
 longest_sentence(text)
+
+p84 = File.read("pg84.txt")
+
+longest_sentence(p84)
+
