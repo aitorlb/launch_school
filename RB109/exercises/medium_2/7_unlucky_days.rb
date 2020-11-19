@@ -18,6 +18,11 @@ friday_13th(2019) == 2
   - Input
   - Output
   - Rules
+    - The rule for leap years is:
+      - exactly divisible by 4 AND NOT exactly divisible by 100
+      - exactly divisible by 400
+
+https://math.stackexchange.com/questions/59135/prove-that-every-year-has-at-least-one-friday-the-13th
 
 - Test cases
   - Covered by examples
