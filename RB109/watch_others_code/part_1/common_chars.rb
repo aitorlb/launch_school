@@ -57,7 +57,7 @@ def common_chars(strings_arr)
   first_str_uniq_chars = strings_arr.first.chars.uniq
 
   first_str_uniq_chars.each do |char|
-    lowest_common_char_count = lowest_common_char_count(strings_arr, char)
+    lowest_common_char_count = lowest_common_char_count(strings_arr[1..], char)
 
     next if lowest_common_char_count.zero?
 
