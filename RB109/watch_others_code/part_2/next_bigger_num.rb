@@ -1,5 +1,6 @@
 =begin
-You have to create a method that takes a positive integer number and returns the next bigger number formed by the same digits:
+You have to create a method that takes a positive integer number and returns 
+the next bigger number formed by the same digits:
 
 p next_bigger_num(9) == -1
 p next_bigger_num(12) == 21
