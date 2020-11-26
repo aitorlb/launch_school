@@ -1,11 +1,14 @@
 =begin
 Task:
 
-In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up. 
+In this simple Kata your task is to create a function that turns a string into 
+a Mexican Wave. You will be passed a string and you must return that string in 
+an array where an uppercase letter is a person standing up. 
 
 Rules
- 1.  The input string will always be lower case but maybe empty.
- 2.  If the character in the string is whitespace then pass over it as if it was an empty seat
+ 1. The input string will always be lower case but maybe empty.
+ 2. If the character in the string is whitespace then pass over it as if it 
+    was an empty seat.
 
 p wave("hello") == ["Hello", "hEllo", "heLlo", "helLo", "hellO"]
 
@@ -47,7 +50,7 @@ def wave(str)
   wave = Array.new(str.size, str)
 
   wave.map.with_index do |word, idx|
-    chars = word.chars
+    chars      = word.chars
     chars[idx] = chars[idx].upcase
     chars.join
   end
@@ -57,9 +60,24 @@ def wave(str)
   Array.new(str.size, str)
     .map
     .with_index do |word, idx|
-      chars = word.chars
+      chars      = word.chars
       chars[idx] = chars[idx].upcase
       chars.join
+    end
+end
+
+def wave(str)
+  arr =
+    str
+    .size
+    .times
+    .map { str.dup }
+
+  arr
+    .map
+    .with_index do |word, idx|
+      word[idx] = word[idx].upcase
+      word
     end
 end
 
