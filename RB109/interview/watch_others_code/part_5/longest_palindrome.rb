@@ -59,7 +59,6 @@ end
 
 def longest_palindrome(str)
   palindromes = []
-
   start_indexes = (0...str.size).to_a
 
   start_indexes.each do |start_idx|
