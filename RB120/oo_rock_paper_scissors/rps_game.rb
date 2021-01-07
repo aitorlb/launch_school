@@ -106,17 +106,6 @@ class Move
   end
 end
 
-class Rule
-  def initialize
-    # not sure what the "state" of a rule object should be
-  end
-end
-
-# not sure where "compare" goes yet
-def compare(move1, move2)
-
-end
-
 class RPSGame
   attr_accessor :human, :computer
 
@@ -176,5 +165,3 @@ class RPSGame
     display_goodbye_message
   end
 end
-
-RPSGame.new.play
