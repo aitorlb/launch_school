@@ -28,62 +28,71 @@ class Player
 end
 
 class RPSGame
-  WELCOME_MESSAGE = "Welcome to Rock, Paper, Scissors! First to reach 10 points wins!"
+  WIN_SCORE = 10
+  WELCOME_MESSAGE =
+    "Welcome to Rock, Paper, Scissors! First to reach #{WIN_SCORE} points wins!"
+
+  def play
+    display_welcome_message
+
+    loop do
+      winner = nil
+
+      loop do
+        human.choose
+        computer.choose
+        display_point_winner
+
+        break if (winner = game_winner(human, computer))
+      end
+
+      display_game_winner(winner)
+
+      break unless play_again?
+    end
+
+    display_goodbye_message
+  end
+
+  private
 
   def display_welcome_message
     puts WELCOME_MESSAGE
   end
 
-  def display_winner
+  def display_point_winner
     display_moves
 
     if human.move > computer.move
-      player_won(human)
+      player_won_point(human)
     elsif computer.move < human.move
-      player_won(computer)
+      player_won_point(computer)
     else
       puts "It's a tie!"
     end
 
-    display_result
+    display_score
   end
 
-  def player_won(player)
+  def player_won_point(player)
     player.increase_score
     puts "#{player.name} won!"
   end
 
-  def display_result
+  def display_score
     puts "Score:"
     puts "#{human.name} - #{human.score}"
     puts "#{computer.name} - #{computer.score}"
   end
+
+  def game_winner(*players)
+    players.find { |player| player.score == WIN_SCORE }
+  end
+
+  def display_game_winner(player)
+    puts "#{player.name} won the game!"
+    display_score
+  end
 end
 
-
-
-# module Scorable
-#   def display_welcome_message
-#     puts "Welcome to Rock, Paper, Scissors! First to reach 10 points wins!"
-#   end
-
-#   def display_winner
-#     display_moves
-
-#     if human.move > computer.move
-
-#       puts "#{human.name} won!"
-#     elsif computer.move < human.move
-#       puts "#{computer.name} won!"
-#     else
-#       puts "It's a tie!"
-#     end
-#   end
-# end
-
-# class RPSGame
-#   prepend Scorable
-# end
-
-# p RPSGame.ancestors
 RPSGame.new.play

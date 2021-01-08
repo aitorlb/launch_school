@@ -107,24 +107,30 @@ class Move
 end
 
 class RPSGame
-  attr_accessor :human, :computer
-
   def initialize
     @human    = Human.new
     @computer = Computer.new
   end
 
+  def play
+    display_welcome_message
+
+    loop do
+      human.choose
+      computer.choose
+      display_winner
+      break unless play_again?
+    end
+
+    display_goodbye_message
+  end
+
+  private
+
+  attr_reader :human, :computer
+
   def display_welcome_message
     puts "Welcome to Rock, Paper, Scissors!"
-  end
-
-  def display_goodbye_message
-    puts "Thanks for playing Rock, Paper, Scissors. Good bye!"
-  end
-
-  def display_moves
-    puts "#{human.name} chose #{human.move}"
-    puts "#{computer.name} chose #{computer.move}"
   end
 
   def display_winner
@@ -137,6 +143,11 @@ class RPSGame
     else
       puts "It's a tie!"
     end
+  end
+
+  def display_moves
+    puts "#{human.name} chose #{human.move}"
+    puts "#{computer.name} chose #{computer.move}"
   end
 
   def play_again?
@@ -152,16 +163,7 @@ class RPSGame
     answer.eql?("y")
   end
 
-  def play
-    display_welcome_message
-
-    loop do
-      human.choose
-      computer.choose
-      display_winner
-      break unless play_again?
-    end
-
-    display_goodbye_message
+  def display_goodbye_message
+    puts "Thanks for playing Rock, Paper, Scissors. Good bye!"
   end
 end
