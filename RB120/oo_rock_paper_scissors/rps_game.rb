@@ -1,3 +1,5 @@
+require 'bundler/setup'
+Bundler.require
 
 class Player
   attr_reader   :move
@@ -25,6 +27,7 @@ class Human < Player
     answer = nil
 
     loop do
+      puts
       puts "What's your name?"
       answer = gets.chomp
       break unless answer.empty?
@@ -38,12 +41,13 @@ class Human < Player
     choice = nil
 
     loop do
-      puts "Please choose an option: #{Move::CHOICES.join(", ")}"
+      puts
+      puts "Please choose an option: #{Move::CHOICES.join(', ')}"
       choice = gets.chomp
       break if Move::CHOICES.include?(choice)
       puts "Sorry, invalid choice."
     end
-    
+
     self.move = Move.new(choice)
   end
 end
@@ -89,15 +93,15 @@ class Move
     when "rock"
       return +1 if other_move.scissors?
       return 0  if other_move.rock?
-      return -1  if other_move.paper?
+      return -1 if other_move.paper?
     when "paper"
       return +1 if other_move.rock?
       return 0  if other_move.paper?
-      return -1  if other_move.scissors?
+      return -1 if other_move.scissors?
     when "scissors"
       return +1 if other_move.paper?
       return 0  if other_move.scissors?
-      return -1  if other_move.rock?
+      return -1 if other_move.rock?
     end
   end
 
@@ -130,6 +134,7 @@ class RPSGame
   attr_reader :human, :computer
 
   def display_welcome_message
+    puts
     puts "Welcome to Rock, Paper, Scissors!"
   end
 
@@ -138,7 +143,7 @@ class RPSGame
 
     if human.move > computer.move
       puts "#{human.name} won!"
-    elsif computer.move < human.move
+    elsif human.move < human.move
       puts "#{computer.name} won!"
     else
       puts "It's a tie!"
@@ -146,6 +151,7 @@ class RPSGame
   end
 
   def display_moves
+    puts
     puts "#{human.name} chose #{human.move}"
     puts "#{computer.name} chose #{computer.move}"
   end
@@ -154,6 +160,7 @@ class RPSGame
     answer = nil
 
     loop do
+      puts
       puts "Would you like to play again? (y/n)"
       answer = gets.chomp
       break if ["y", "n"].include?(answer.downcase)
@@ -164,6 +171,13 @@ class RPSGame
   end
 
   def display_goodbye_message
+    puts
     puts "Thanks for playing Rock, Paper, Scissors. Good bye!"
   end
 end
+
+# Require RPS Bonus Features files in order
+bonus_features_files = "#{Dir.pwd}/oo_rock_paper_scissors/bonus_features/*.rb"
+Dir.glob(bonus_features_files).sort.each { |file| require(file) }
+
+RPSGame.new.play
