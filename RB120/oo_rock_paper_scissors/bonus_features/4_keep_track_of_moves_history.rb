@@ -14,7 +14,7 @@ class MovesHistory
   def save_player_moves(player1, player2)
     @moves_history << {
       player1.name => player1.move,
-      player2.name => player2.move,
+      player2.name => player2.move
     }
   end
 

@@ -88,7 +88,7 @@ class Move
     'paper' => Paper,
     'scissors' => Scissors,
     'lizard' => Lizard,
-    'spock' => Spock,
+    'spock' => Spock
   }.freeze
 
   def self.for(choice)
@@ -99,7 +99,6 @@ class Move
     raise(NotImplementedError)
   end
 end
-
 
 class Player
   private

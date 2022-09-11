@@ -3,7 +3,7 @@ Bundler.require
 
 class Player
   attr_reader   :move
-  attr_accessor :name
+  attr_reader   :name
 
   def initialize
     set_name
@@ -20,6 +20,7 @@ class Player
   private
 
   attr_writer :move
+  attr_writer :name
 end
 
 class Human < Player
@@ -143,7 +144,7 @@ class RPSGame
 
     if human.move > computer.move
       puts "#{human.name} won!"
-    elsif human.move < human.move
+    elsif human.move < computer.move
       puts "#{computer.name} won!"
     else
       puts "It's a tie!"
