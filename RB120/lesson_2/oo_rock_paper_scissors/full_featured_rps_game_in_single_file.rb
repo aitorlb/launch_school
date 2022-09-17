@@ -1,6 +1,3 @@
-require 'bundler/setup'
-Bundler.require
-
 class Move
   include Comparable
 

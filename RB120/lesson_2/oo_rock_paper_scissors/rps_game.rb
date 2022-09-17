@@ -1,6 +1,3 @@
-require 'bundler/setup'
-Bundler.require
-
 class Player
   attr_reader   :move
   attr_reader   :name
