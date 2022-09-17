@@ -1,7 +1,7 @@
 require 'byebug'
 
 class Board
-  WINNABLE_POSITIONS = [
+  WINNING_LINES = [
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
@@ -34,18 +34,16 @@ class Board
     display_grid(positions)
   end
 
-  def square_at(position)
-    grid.fetch(position) do
-      raise(ArgumentError, 'Invalid position')
-    end
+  def square_marked?(position)
+    square_at(position).marked?
+  end
+
+  def mark_square(position, player)
+    square_at(position).mark_with_player(player)
   end
 
   def winner?
-    WINNABLE_POSITIONS.any? do |positions|
-      squares = positions.map { |position| square_at(position) }
-
-      find_winner(squares)
-    end
+    detect_winner
   end
 
   def full?
@@ -81,13 +79,23 @@ class Board
     square.marked? ? square : POSITION_STRINGS[position]
   end
 
-  def find_winner(row_of_squares)
-    return false unless row_of_squares.all?(&:marked?)
-    return false unless row_of_squares.uniq(&:player).one?
+  def square_at(position)
+    grid.fetch(position) do
+      raise(ArgumentError, 'Invalid position')
+    end
+  end
 
-    self.winner = row_of_squares.sample.player
+  def detect_winner
+    WINNING_LINES.any? do |positions|
+      squares = positions.map { |position| square_at(position) }
 
-    true
+      next false unless squares.all?(&:marked?)
+      next false unless squares.uniq(&:marked_player).one?
+
+      self.winner = squares.first.marked_player
+
+      true
+    end
   end
 end
 
@@ -108,13 +116,25 @@ class Square
     !!mark
   end
 
-  def player
+  def marked_player
     mark&.player
   end
 
   private
 
   attr_writer :mark
+end
+
+class Mark
+  attr_reader :player
+
+  def initialize(player)
+    @player = player
+  end
+
+  def to_s
+    player.marker
+  end
 end
 
 class Player
@@ -127,22 +147,6 @@ class Player
 
   def to_s
     "#{name} (#{marker})"
-  end
-
-  def mark(square)
-    square.mark_with_player(self)
-  end
-end
-
-class Mark
-  attr_reader :player
-
-  def initialize(player)
-    @player = player
-  end
-
-  def to_s
-    player.marker
   end
 end
 
@@ -196,14 +200,13 @@ class TTTGame
   end
 
   def player_move(player)
-    square = nil
+    position = nil
     loop do
       position = ask_player_move(player)
-      square   = board.square_at(position)
-      break unless square.marked?
+      break unless board.square_marked?(position)
       puts "Sorry, that square is already marked."
     end
-    player.mark(square)
+    board.mark_square(position, player)
   end
 
   def ask_player_move(player)
@@ -223,7 +226,11 @@ class TTTGame
 
   def display_result
     puts
-    puts "#{board.winner} WON THE GAME!"
+    if board.winner
+      puts "#{board.winner} WON THE GAME!"
+    else
+      puts "IT'S A TIE!"
+    end
     display_board(with_positions: false)
   end
 
