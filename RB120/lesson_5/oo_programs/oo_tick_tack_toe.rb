@@ -21,7 +21,7 @@ class Board
     6 => '⁶',
     7 => '⁷',
     8 => '⁸',
-    9 => '⁹',
+    9 => '⁹'
   }
 
   attr_reader :winner
@@ -146,7 +146,26 @@ class Player
   end
 
   def to_s
-    "#{name} (#{marker})"
+    "#{name} (#{marker.inspect})"
+  end
+
+  def move(board)
+    position = ask_for_move(board)
+    board.mark_square(position, self)
+  end
+
+  private
+
+  def ask_for_move(board)
+    loop do
+      puts
+      puts "#{self}, enter a square number."
+      input = gets.chomp
+      position = input.then { |string| Integer(string) rescue -1 } # rubocop:disable Style/RescueModifier
+      break position if position.between?(1, 9) &&
+                        !board.square_marked?(position)
+      puts "Sorry, invalid move."
+    end
   end
 end
 
@@ -185,39 +204,18 @@ class TTTGame
     puts "Player 2 has the #{player2.marker.inspect} marker."
   end
 
-  def display_board(with_positions: true)
+  def display_board(with_numbers: true)
     puts
-    board.display(positions: with_positions)
+    board.display(positions: with_numbers)
     puts
   end
 
   def first_player_moves
-    player_move(player1)
+    player1.move(board)
   end
 
   def second_player_moves
-    player_move(player2)
-  end
-
-  def player_move(player)
-    position = nil
-    loop do
-      position = ask_player_move(player)
-      break unless board.square_marked?(position)
-      puts "Sorry, that square is already marked."
-    end
-    board.mark_square(position, player)
-  end
-
-  def ask_player_move(player)
-    loop do
-      puts
-      puts "#{player}, what is your move? Enter a square number."
-      input = gets.chomp
-      integer = input.then { |string| Integer(string) rescue -1 } # rubocop:disable Style/RescueModifier
-      break integer if integer.between?(1, 9)
-      puts "Sorry, invalid move."
-    end
+    player2.move(board)
   end
 
   def game_over?
@@ -231,7 +229,7 @@ class TTTGame
     else
       puts "IT'S A TIE!"
     end
-    display_board(with_positions: false)
+    display_board(with_numbers: false)
   end
 
   def display_goodbye_message
