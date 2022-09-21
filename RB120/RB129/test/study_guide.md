@@ -12,9 +12,7 @@
 - Class inheritance, encapsulation, and polymorphism
 - Modules
 - Method lookup path
-- self
-  - Calling methods with self
-  - More about self
+- `self`
 - Reading OO code
 - Fake operators and equality
 - Working with collaborator objects
