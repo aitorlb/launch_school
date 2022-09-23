@@ -3,7 +3,7 @@
 ## Specific Topics of Interest
 
 - [Classes and objects](./classes_and_objects.md)
-- Use `attr_*` to create setter and getter methods
+- [Use `attr_*` to create setter and getter methods](./attr_accessor_methods.md)
 - How to call setters and getters
 - Instance variables, class variables, and constants, including the scope of each type and how inheritance can affect that scope
 - Instance methods vs. class methods
