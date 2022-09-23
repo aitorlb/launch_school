@@ -1,11 +1,5 @@
 # Classes and objects
 
-An object is an instance of a class.
-
-Objects are created from classes, so let's define classes first.
-
-## Classes
-
 Classes are templates from which objects are created. Classes define what state and behavior objects can have.
 
 Objects are instances of a class. The process of creating a new object or instance from a class is called instantiation. Individual objects of the same class can contain different state.
