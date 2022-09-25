@@ -4,7 +4,7 @@ Classes are templates from which objects are created. Classes define what states
 - States track information for individual objects and are implemented in Ruby via instance variables.
 - Behaviors are what objects are capable of doing and are implemented in Ruby via instance methods.
 
-Objects are instances of a class. The process of creating a new object or instance from a class is called instantiation. Individual objects of the same class can contain different state, but they all share the same behavior.
+Objects are instances of a class. The process of creating a new object or instance from a class is called instantiation. Individual objects of the same class may contain different state, but they all share the same behavior.
 
 Classes are defined in Ruby using the `class` keyword followed by a name. The name must begin with a capital letter and by convention we use the CamelCase naming convention. The class definition is terminated by the `end` keyword.
 
@@ -30,7 +30,7 @@ Next, an instance of the class `Greeter` is created by calling `Greeter.new` wit
 
 Next, another instance of the class `Greeter` is created by calling `Greeter.new` with no arguments and assigned to the local variable `greeter2`. The method `#greet` is called on the `greeter2` which outputs the string `"Hello! What is your name?"` and returns `nil`.
 
-Since the class `Greeter` does not define any instance variables, the objects it can create do not hold unique state from one another.
+Since the class `Greeter` does not define any instance variables, the objects it can create cannot hold different state from one another.
 
 ```ruby
 class Greeter
@@ -58,4 +58,4 @@ Next, an instance of the class `Greeter` is created by calling `Greeter.new` wit
 
 Next, another instance of the class `Greeter` is created by calling `Greeter.new` with the argument `"Doe"` and assigned to the local variable `greeter2`. The method `#greet` is called on the `greeter2` which outputs the string `"Hello! My name is Doe. What is your name?"` and returns `nil`.
 
-Since the class `Greeter` defines an instance variable `@name`, the objects it can create can hold unique state from one another: different objects may have different names.
+Since the class `Greeter` defines an instance variable `@name`, the objects it can create can hold different state from one another: different objects may have different names.
