@@ -1,12 +1,14 @@
 # Classes and objects
 
-Classes are templates from which objects are created. Classes define what state and behavior objects can have.
+Classes are templates from which objects are created. Classes define what states and behavior objects can have:
+- States track information for individual objects and are implemented in Ruby via instance variables.
+- Behaviors are what objects are capable of doing and are implemented in Ruby via instance methods.
 
-Objects are instances of a class. The process of creating a new object or instance from a class is called instantiation. Individual objects of the same class can contain different state.
+Objects are instances of a class. The process of creating a new object or instance from a class is called instantiation. Individual objects of the same class can contain different state, but they all share the same behavior.
 
 Classes are defined in Ruby using the `class` keyword followed by a name. The name must begin with a capital letter and by convention we use the CamelCase naming convention. The class definition is terminated by the `end` keyword.
 
-Objects are instantiated in Ruby by calling `#new` on a class. Whenever a new object of a class is created using the `#new` method, Ruby looks for a method named `#initialize` and, if found, it is called on the newly created object with the arguments that were passed to the `#new` method.
+Objects are instantiated in Ruby by calling `#new` on a class. Whenever a new object of a class is created using the `#new` method, Ruby looks for a method named `#initialize` and, if found, it is called on the newly created object with the arguments that were passed to the `#new` method. We refer to the `#initialize` method as a constructor, because it is a special method that builds the object when a new object is instantiated.
 
 ```ruby
 class Greeter
@@ -28,7 +30,7 @@ Next, an instance of the class `Greeter` is created by calling `Greeter.new` wit
 
 Next, another instance of the class `Greeter` is created by calling `Greeter.new` with no arguments and assigned to the local variable `greeter2`. The method `#greet` is called on the `greeter2` which outputs the string `"Hello! What is your name?"` and returns `nil`.
 
-Since the class `Greeter` does not define any attributes and the method `#greet` outputs a string with the same value every time, the objects created hold no differentiated state and share the exact same behavior.
+Since the class `Greeter` does not define any instance variables, the objects it can create do not hold unique state from one another.
 
 ```ruby
 class Greeter
@@ -56,4 +58,4 @@ Next, an instance of the class `Greeter` is created by calling `Greeter.new` wit
 
 Next, another instance of the class `Greeter` is created by calling `Greeter.new` with the argument `"Doe"` and assigned to the local variable `greeter2`. The method `#greet` is called on the `greeter2` which outputs the string `"Hello! My name is Doe. What is your name?"` and returns `nil`.
 
-Since the class `Greeter` defines a attribute `@name` and the method `#greet` operates on that attribute, the objects created hold unique state and behavior from one another.
+Since the class `Greeter` defines an instance variable `@name`, the objects it can create can hold unique state from one another: different objects may have different names.
