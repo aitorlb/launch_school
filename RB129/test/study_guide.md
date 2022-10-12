@@ -6,7 +6,7 @@
 - [Use `attr_*` to create setter and getter methods](./getter_and_setter_methods.md)
 - [How to call setters and getters](./getter_and_setter_methods.md)
 - [Instance variables, class variables, and constants, including the scope of each type and how inheritance can affect that scope](./instance_class_and_constant_variables.md)
-- Instance methods vs. class methods
+- [Instance methods vs. class methods](./instance_methods_vs_class_methods.md)
 - Method Access Control
 - Referencing and setting instance variables vs. using getters and setters
 - Class inheritance, encapsulation, and polymorphism
