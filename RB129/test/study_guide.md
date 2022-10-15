@@ -7,7 +7,7 @@
 - [How to call setters and getters](./getter_and_setter_methods.md)
 - [Instance variables, class variables, and constants, including the scope of each type and how inheritance can affect that scope](./instance_class_and_constant_variables.md)
 - [Instance methods vs. class methods](./instance_methods_vs_class_methods.md)
-- Method Access Control
+- [Method Access Control](./method_access_control.md)
 - Referencing and setting instance variables vs. using getters and setters
 - Class inheritance, encapsulation, and polymorphism
 - Modules
