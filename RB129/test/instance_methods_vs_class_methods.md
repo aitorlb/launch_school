@@ -44,13 +44,20 @@ class Person
   def self.number_of_persons
     @@number_of_persons
   end
+
+  def self.next_number_of_persons
+    number_of_persons + 1
+  end
 end
 
-Person.number_of_persons # => 0
+Person.number_of_persons      # => 0
+Person.next_number_of_persons # => 1
 person = Person.new
-Person.number_of_persons # => 1
+Person.number_of_persons      # => 1
+Person.next_number_of_persons # => 2
 ```
 
-In the code above, a `Person` class is defined with two methods:
+In the code above, a `Person` class is defined with three methods:
 - The `#initialize` instance method which increases the value assigned to the class variable `@@number_of_persons` by one.
 - The `::number_of_persons` class method which returns the value assigned to the class variable `@@number_of_persons`.
+- The `::next_number_of_persons` class method which references the class method `::number_of_persons` in its body and returns the return value of the class method `::number_of_persons` plus one.
